@@ -5,6 +5,8 @@ import { FiPlus } from "react-icons/fi";
 class Product extends Component {
   render() {
     const product = this.props.product;
+    const onAddProducts = this.props.onAddProducts;
+    const clickAble = this.props.clickAble;
     return (
       <div className="product">
         <div className="product-image">
@@ -16,7 +18,7 @@ class Product extends Component {
             单价:{product.price}元/{product.units}
           </p>
         </div>
-        <button className="product-add">
+        <button disabled={!clickAble} className="product-add" onClick={(event) => onAddProducts(product.name, event)}>
           <FiPlus />
         </button>
       </div>
