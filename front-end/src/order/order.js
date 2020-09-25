@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import "./order.css";
 
 class Order extends Component {
+  handleDelete = () => {};
+
   render() {
     let orders = window.orders;
     if (orders === undefined || orders.length === 0) {
-      console.log(1);
       return (
         <div className="no-order">
           <p>
@@ -15,8 +16,33 @@ class Order extends Component {
         </div>
       );
     }
-    console.log(2);
-    return <div className="order">Order</div>;
+    return (
+      <div className="order">
+        <div className="nothing"></div>
+        <div className="title table">
+          <p>名字</p>
+          <p>单价</p>
+          <p>数量</p>
+          <p>单位</p>
+          <p>操作</p>
+        </div>
+        {orders.map((order) => {
+          return (
+            <div className={`table ${order.name}`}>
+              <p>{order.name}</p>
+              <p>{order.price}</p>
+              <p>{order.number}</p>
+              <p>{order.units}</p>
+              <div>
+                <button onClick={() => this.handleDelete(order.name)}>
+                  删除
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 }
 

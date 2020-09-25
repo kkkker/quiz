@@ -9,3 +9,50 @@
   background-color: white;
   font-size: 2em;
 }
+
+.order {
+  margin: 0 auto;
+  width: 100%;
+  min-height: min(650px);
+  background-color: white;
+}
+
+.nothing {
+  height: 100px;
+  margin-bottom: 2.2em;
+  background-color: #f1f2f6;
+}
+
+.title {
+  background-color: #f1f2f6;
+  font-size: 1em;
+}
+
+.table {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: #eaebee solid 2px;
+  text-align: center;
+}
+
+.table p,
+.table div {
+  flex: 1;
+}
+
+.table div {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.table button {
+  width: 39%;
+  height: 65%;
+  color: red;
+  background-color: #f1f2f6;
+  border: #c1c2c5 solid 1px;
+  border-radius: 10% 7%;
+}
