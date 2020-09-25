@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./product.css";
+import { FiPlus } from "react-icons/fi";
 
 class Product extends Component {
   render() {
@@ -15,6 +16,9 @@ class Product extends Component {
             单价:{product.price}元/{product.units}
           </p>
         </div>
+        <button className="product-add">
+          <FiPlus />
+        </button>
       </div>
     );
   }
