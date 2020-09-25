@@ -8,6 +8,7 @@ import AddProducts from "./add-products/add_products";
 import Footer from "./footer/footer";
 
 class App extends Component {
+
   render() {
     return (
       <BrowserRouter>

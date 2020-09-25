@@ -13,6 +13,6 @@ public class Product {
 
     private String name;
     private String units;
-    private int price;
+    private double price;
     private  String imageUrl;
 }

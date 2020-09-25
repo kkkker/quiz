@@ -9,8 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "products")
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class ProductEntity {
 
     private String units;
 
-    private int price;
+    private double price;
 
     @Column(name = "image")
     private  String imageUrl;
