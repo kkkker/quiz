@@ -10,15 +10,15 @@ import Footer from "./footer/footer";
 class App extends Component {
   render() {
     return (
-      <div className="app">
-        <BrowserRouter>
+      <BrowserRouter>
+        <div className="app">
           <Nav className="nav-bar" />
           <Route exact path="/" component={Store} />
           <Route exact path="/calculator" component={Order} />
           <Route exact path="/timer" component={AddProducts} />
           <Footer className="footer" />
-        </BrowserRouter>
-      </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }

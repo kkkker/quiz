@@ -6,7 +6,7 @@ import "./nav.css";
 class Nav extends Component {
   render() {
     return (
-      <nav className="nav">
+      <nav id="nav">
         <div className="link">
           <NavLink
             exact
