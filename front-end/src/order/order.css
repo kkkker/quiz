@@ -1,0 +1,11 @@
+.no-order {
+  margin: 0 auto;
+  padding-top: 4em;
+  padding-left: 200px;
+  width: 100%;
+  min-height: min(500px);
+  display: flex;
+  align-self: center;
+  background-color: white;
+  font-size: 2em;
+}
