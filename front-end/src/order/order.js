@@ -28,7 +28,7 @@ class Order extends Component {
         </div>
         {orders.map((order) => {
           return (
-            <div className={`table ${order.name}`}>
+            <div key={order.name} className={`table ${order.name}`}>
               <p>{order.name}</p>
               <p>{order.price}</p>
               <p>{order.number}</p>
