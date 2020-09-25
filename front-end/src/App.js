@@ -15,8 +15,8 @@ class App extends Component {
         <div className="app">
           <Nav className="nav-bar" />
           <Route exact path="/" component={Store} />
-          <Route exact path="/calculator" component={Order} />
-          <Route exact path="/timer" component={AddProducts} />
+          <Route exact path="/order" component={Order} />
+          <Route exact path="/addProducts" component={AddProducts} />
           <Footer className="footer" />
         </div>
       </BrowserRouter>
