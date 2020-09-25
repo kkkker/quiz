@@ -5,6 +5,7 @@ import Nav from "./nav/nav";
 import Store from "./store/store";
 import Order from "./order/order";
 import AddProducts from "./add-products/add_products";
+import Footer from "./footer/footer";
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Store} />
           <Route exact path="/calculator" component={Order} />
           <Route exact path="/timer" component={AddProducts} />
+          <Footer className="footer" />
         </BrowserRouter>
       </div>
     );
