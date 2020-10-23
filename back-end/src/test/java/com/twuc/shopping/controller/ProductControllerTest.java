@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class ProductControllerTest {
 
     @Autowired
@@ -31,6 +33,10 @@ class ProductControllerTest {
     @BeforeEach
     public void setUp() {
         productRepository.deleteAll();
+    }
+
+    @Test
+    void should_get_all_products() throws Exception {
         ProductEntity productEntity = ProductEntity.builder()
                 .name("可乐")
                 .price(3.5)
@@ -46,10 +52,7 @@ class ProductControllerTest {
                 .imageUrl("面包url")
                 .build();
         productRepository.save(productEntity);
-    }
 
-    @Test
-    void should_get_all_products() throws Exception {
         mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",  hasSize(2)))
