@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 public class Product {
 
     @NotEmpty
+    @Size(max = 50)
     private String name;
 
     @NotEmpty

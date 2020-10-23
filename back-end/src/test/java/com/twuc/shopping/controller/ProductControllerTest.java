@@ -139,6 +139,44 @@ class ProductControllerTest {
     }
 
     @Test
+    void should_not_add_product_when_name_length_more_than_50() throws Exception {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("12345678901234567890123456789012345678901234567890")
+                .price(1.23)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        product = Product.builder()
+                .name("123456789012345678901234567890123456789012345678901")
+                .price(1.23)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        productEntityList = productRepository.findAll();
+        assertEquals(1, productEntityList.size());
+    }
+
+    @Test
     void should_not_add_product_when_price_empty() throws Exception {
 
         List<ProductEntity> productEntityList = productRepository.findAll();
