@@ -1,6 +1,7 @@
 package com.twuc.shopping.service;
 
 import com.twuc.shopping.dto.Product;
+import com.twuc.shopping.dto.StoreSystemMessageResponse;
 import com.twuc.shopping.entity.ProductEntity;
 import com.twuc.shopping.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,6 +40,19 @@ class ProductServiceTest {
         when(productRepository.findAll()).thenReturn(productEntityList);
         productService.getAllProducts();
         verify(productRepository, times(1)).findAll();
+    }
+
+    @Test
+    void add_product_when_price_less_than_0() {
+        Product product = Product.builder()
+                .price(-1.0)
+                .imageUrl("url")
+                .units("units")
+                .name("name")
+                .build();
+        String result = productService.addProduct(product);
+
+        assertEquals(StoreSystemMessageResponse.NEGATIVE_PRICE, result);
     }
 
 }
