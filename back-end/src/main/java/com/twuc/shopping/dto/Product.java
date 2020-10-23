@@ -22,5 +22,7 @@ public class Product {
 
     @NotNull
     private Double price;
+
+    @NotEmpty
     private  String imageUrl;
 }
