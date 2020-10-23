@@ -29,5 +29,6 @@ public class Product {
     private Double price;
 
     @NotEmpty
+    @Size(max = 200)
     private  String imageUrl;
 }

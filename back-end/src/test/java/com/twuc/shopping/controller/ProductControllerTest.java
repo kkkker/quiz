@@ -141,10 +141,12 @@ class ProductControllerTest {
     @Test
     void should_not_add_product_when_name_length_more_than_50() throws Exception {
 
+        String stringWith50Length = "12345678901234567890123456789012345678901234567890";
+
         List<ProductEntity> productEntityList = productRepository.findAll();
         assertEquals(0, productEntityList.size());
         Product product = Product.builder()
-                .name("12345678901234567890123456789012345678901234567890")
+                .name(stringWith50Length)
                 .price(1.23)
                 .units("units")
                 .imageUrl("test url")
@@ -159,7 +161,7 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
 
         product = Product.builder()
-                .name("123456789012345678901234567890123456789012345678901")
+                .name(stringWith50Length + "1")
                 .price(1.23)
                 .units("units")
                 .imageUrl("test url")
@@ -301,12 +303,14 @@ class ProductControllerTest {
     @Test
     void should_not_add_product_when_units_length_more_than_50() throws Exception {
 
+        String stringWith50Length = "12345678901234567890123456789012345678901234567890";
+
         List<ProductEntity> productEntityList = productRepository.findAll();
         assertEquals(0, productEntityList.size());
         Product product = Product.builder()
                 .name("4567890")
                 .price(1.23)
-                .units("12345678901234567890123456789012345678901234567890")
+                .units(stringWith50Length)
                 .imageUrl("test url")
                 .build();
 
@@ -321,7 +325,7 @@ class ProductControllerTest {
         product = Product.builder()
                 .name("123456778901")
                 .price(1.23)
-                .units("123456789012345678901234567890123456789012345678901")
+                .units(stringWith50Length + "1")
                 .imageUrl("test url")
                 .build();
 
@@ -371,6 +375,46 @@ class ProductControllerTest {
                 .andExpect(status().isBadRequest());
 
         assertEquals(0, productEntityList.size());
+    }
+
+    @Test
+    void should_not_add_product_when_units_length_more_than_200() throws Exception {
+
+        String stringWith50Length = "12345678901234567890123456789012345678901234567890";
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("4567890")
+                .price(1.23)
+                .units("units")
+                .imageUrl(stringWith50Length + stringWith50Length + stringWith50Length + stringWith50Length)
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        product = Product.builder()
+                .name("123456778901")
+                .price(1.23)
+                .units("123456788901")
+                .imageUrl(stringWith50Length + stringWith50Length + stringWith50Length + stringWith50Length + "1")
+                .build();
+
+        json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        productEntityList = productRepository.findAll();
+        assertEquals(1, productEntityList.size());
     }
 
     @Test
