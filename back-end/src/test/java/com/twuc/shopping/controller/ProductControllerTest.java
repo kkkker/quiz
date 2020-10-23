@@ -200,6 +200,44 @@ class ProductControllerTest {
     }
 
     @Test
+    void should_not_add_product_when_price_more_than_one_hundred_million() throws Exception {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("1234567890")
+                .price(100000000.0)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        product = Product.builder()
+                .name("123456785678901")
+                .price(100000000.00000001)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        productEntityList = productRepository.findAll();
+        assertEquals(1, productEntityList.size());
+    }
+
+    @Test
     void should_not_add_product_when_price_less_than_0() throws Exception {
 
         List<ProductEntity> productEntityList = productRepository.findAll();
