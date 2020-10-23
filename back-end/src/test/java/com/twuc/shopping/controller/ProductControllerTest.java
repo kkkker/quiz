@@ -60,7 +60,7 @@ class ProductControllerTest {
 
         mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$",  hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("可乐")))
                 .andExpect(jsonPath("$[0].price", is(3.5)))
                 .andExpect(jsonPath("$[0].units", is("瓶")))
@@ -99,7 +99,43 @@ class ProductControllerTest {
         assertEquals(product.getImageUrl(), productEntityList.get(0).getImageUrl());
         assertEquals(product.getUnits(), productEntityList.get(0).getUnits());
         assertEquals(product.getPrice(), productEntityList.get(0).getPrice());
+    }
 
+    @Test
+    void should_not_add_product_when_name_empty() throws Exception {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("")
+                .price(1.23)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        product = Product.builder()
+                .name(null)
+                .price(1.23)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        assertEquals(0, productEntityList.size());
     }
 
 }
