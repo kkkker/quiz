@@ -161,4 +161,41 @@ class ProductControllerTest {
         assertEquals(0, productEntityList.size());
     }
 
+    @Test
+    void should_not_add_product_when_units_empty() throws Exception {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("test")
+                .price(1.23)
+                .units(null)
+                .imageUrl("test url")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        product = Product.builder()
+                .name("test")
+                .price(1.23)
+                .units("")
+                .imageUrl("test url")
+                .build();
+
+        json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        assertEquals(0, productEntityList.size());
+    }
+
 }

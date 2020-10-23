@@ -16,6 +16,8 @@ public class Product {
 
     @NotEmpty
     private String name;
+
+    @NotEmpty
     private String units;
 
     @NotNull
