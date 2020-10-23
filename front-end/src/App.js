@@ -4,7 +4,7 @@ import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Nav from "./nav/nav";
 import Store from "./store/store";
 import Order from "./order/order";
-import AddProducts from "./add-products/add_products";
+import AddProduct from "./addProduct/addProduct";
 import Footer from "./footer/footer";
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
           <Nav className="nav-bar" />
           <Switch>
             <Route exact path="/order" component={Order} />
-            <Route exact path="/addProducts" component={AddProducts} />
+            <Route exact path="/addProduct" component={AddProduct} />
             <Route exact path="/" component={Store} />
           </Switch>
           <Footer className="footer" />
