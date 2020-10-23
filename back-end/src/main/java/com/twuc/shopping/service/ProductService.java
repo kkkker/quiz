@@ -1,6 +1,8 @@
 package com.twuc.shopping.service;
 
 import com.twuc.shopping.dto.Product;
+import com.twuc.shopping.dto.StoreSystemMessageResponse;
+import com.twuc.shopping.entity.ProductEntity;
 import com.twuc.shopping.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ public class ProductService {
     ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        List<Product> products = productRepository.findAll()
+        return productRepository.findAll()
                 .stream()
                 .map(productEntity -> Product.builder()
                         .name(productEntity.getName())
@@ -24,6 +26,16 @@ public class ProductService {
                         .imageUrl(productEntity.getImageUrl())
                         .build())
                 .collect(Collectors.toList());
-        return products;
+    }
+
+    public String addProduct(Product product) {
+        ProductEntity productEntity = ProductEntity.builder()
+                .imageUrl(product.getImageUrl())
+                .name(product.getName())
+                .price(product.getPrice())
+                .units(product.getUnits())
+                .build();
+        productRepository.save(productEntity);
+        return StoreSystemMessageResponse.SUCCESS;
     }
 }
