@@ -21,6 +21,7 @@ public class Product {
     private String name;
 
     @NotEmpty
+    @Size(max = 50)
     private String units;
 
     @NotNull
