@@ -15,8 +15,10 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,6 +55,28 @@ class ProductServiceTest {
         String result = productService.addProduct(product);
 
         assertEquals(StoreSystemMessageResponse.NEGATIVE_PRICE, result);
+    }
+
+    @Test
+    void add_product_when_name_exits() {
+        Product product = Product.builder()
+                .price(1.0)
+                .imageUrl("url")
+                .units("units")
+                .name("name")
+                .build();
+
+        ProductEntity productEntity = ProductEntity.builder()
+                .price(1.0)
+                .imageUrl("url")
+                .units("units")
+                .name("name")
+                .build();
+
+        when(productRepository.findByName(any(String.class))).thenReturn(Optional.ofNullable(productEntity));
+        String result = productService.addProduct(product);
+
+        assertEquals(StoreSystemMessageResponse.EXIST_NAME, result);
     }
 
 }
