@@ -27,7 +27,31 @@ class AddProduct extends Component {
     });
     const isValid = this.validProdect();
     if (isValid) {
-      console.log(this.state);
+
+      const data = {
+        name: this.state.name,
+        units: this.state.units,
+        price: this.state.price,
+        imageUrl: this.state.imageUrl,
+      };
+
+      const url = "http://localhost:8080/product";
+
+      fetch(url, {
+        body: JSON.stringify(data), // must match 'Content-Type' header
+        cache: "no-cache",
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "POST",
+      }).then()
+      this.setState({
+        name: "",
+        price: null,
+        units: "",
+        imageUrl: "",
+        isSubmit: false,
+      });
     }
   };
 
