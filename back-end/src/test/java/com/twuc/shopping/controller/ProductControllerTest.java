@@ -259,4 +259,49 @@ class ProductControllerTest {
         assertEquals(0, productEntityList.size());
     }
 
+    @Test
+    void should_not_add_product_when_name_exist() throws Exception {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("test")
+                .price(1.23)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("success")));
+
+        Product secondProduct = Product.builder()
+                .name("test")
+                .price(2.34)
+                .units("units2")
+                .imageUrl("test url2")
+                .build();
+
+        json = objectMapper.writeValueAsString(secondProduct);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("exist name")));
+
+
+        productEntityList = productRepository.findAll();
+        assertEquals(1, productEntityList.size());
+        assertEquals(product.getName(), productEntityList.get(0).getName());
+        assertEquals(product.getImageUrl(), productEntityList.get(0).getImageUrl());
+        assertEquals(product.getUnits(), productEntityList.get(0).getUnits());
+        assertEquals(product.getPrice(), productEntityList.get(0).getPrice());
+    }
+
 }

@@ -32,6 +32,9 @@ public class ProductService {
         if (product.getPrice() < 0) {
             return StoreSystemMessageResponse.NEGATIVE_PRICE;
         }
+        if (productRepository.findByName(product.getName()).isPresent()) {
+            return StoreSystemMessageResponse.EXIST_NAME;
+        }
         ProductEntity productEntity = ProductEntity.builder()
                 .imageUrl(product.getImageUrl())
                 .name(product.getName())
