@@ -60,3 +60,13 @@
 .product-submit button:hover {
   cursor: pointer;
 }
+
+.product-submit button[disabled]:hover {
+  cursor: default !important;
+}
+
+.product-item-valid {
+  font-size: 0.6em;
+  color: red;
+  margin: 0;
+}
