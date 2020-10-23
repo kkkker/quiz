@@ -12,6 +12,7 @@ class AddProduct extends Component {
     isUnitsValid: false,
     isImageUrlValid: false,
     isSubmit: false,
+    isProductExistModalVisible: false,
   };
 
   handleChange = (name, event) => {
@@ -27,7 +28,6 @@ class AddProduct extends Component {
     });
     const isValid = this.validProdect();
     if (isValid) {
-
       const data = {
         name: this.state.name,
         units: this.state.units,
@@ -38,20 +38,32 @@ class AddProduct extends Component {
       const url = "http://localhost:8080/product";
 
       fetch(url, {
-        body: JSON.stringify(data), // must match 'Content-Type' header
-        cache: "no-cache",
+        body: JSON.stringify(data),
         headers: {
           "content-type": "application/json",
         },
         method: "POST",
-      }).then()
-      this.setState({
-        name: "",
-        price: null,
-        units: "",
-        imageUrl: "",
-        isSubmit: false,
-      });
+      })
+        .then((response) => {
+          response.text().then((data) => {
+            if (response.status === 400 && data === "exist name") {
+              this.setState({
+                isProductExistModalVisible: true,
+              });
+            }
+          });
+
+          this.setState({
+            name: "",
+            price: null,
+            units: "",
+            imageUrl: "",
+            isSubmit: false,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
