@@ -15,9 +15,14 @@ class AddProduct extends Component {
     });
   };
 
+  handleSubmit = (event) => {
+    console.log(this.state);
+    event.preventDefault();
+  }
+
   render() {
     return (
-      <div className="add-product">
+      <div className="add-product"  onSubmit={this.handleSubmit}>
         <form>
           <h2>添加商品</h2>
           <div className="product-item">
