@@ -37,4 +37,26 @@
 
 .product-submit {
   width: 90%;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+.product-submit button {
+  width: 70px;
+  height: 30px;
+  background-color: #2594ff;
+  color: white;
+  border-radius: 5px;
+}
+
+.product-submit button[disabled] {
+  width: 70px;
+  height: 30px;
+  background-color: rgb(202, 201, 201) !important;
+  color: black !important;
+  border-radius: 5px;
+}
+
+.product-submit button:hover {
+  cursor: pointer;
 }

@@ -4,9 +4,15 @@ import "./addProduct.css";
 class AddProduct extends Component {
   state = {
     name: "",
-    price: 0,
+    price: null,
     units: "",
     imageUrl: "",
+  };
+
+  handleChange = (name, event) => {
+    this.setState({
+      [name]: event.target.value,
+    });
   };
 
   render() {
@@ -35,7 +41,7 @@ class AddProduct extends Component {
               type="number"
               className="form-control"
               placeholder="价格"
-              value={this.state.name}
+              value={this.state.price}
               onChange={(e) => this.handleChange("price", e)}
               id="price"
             />
@@ -48,7 +54,7 @@ class AddProduct extends Component {
               type="text"
               className="form-control"
               placeholder="单位"
-              value={this.state.name}
+              value={this.state.units}
               onChange={(e) => this.handleChange("units", e)}
               id="units"
             />
@@ -60,8 +66,8 @@ class AddProduct extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="图片"
-              value={this.state.name}
+              placeholder="URL"
+              value={this.state.imageUrl}
               onChange={(e) => this.handleChange("imageUrl", e)}
               id="imageUrl"
             />
