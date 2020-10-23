@@ -29,6 +29,9 @@ public class ProductService {
     }
 
     public String addProduct(Product product) {
+        if (product.getPrice() < 0) {
+            return StoreSystemMessageResponse.NEGATIVE_PRICE;
+        }
         ProductEntity productEntity = ProductEntity.builder()
                 .imageUrl(product.getImageUrl())
                 .name(product.getName())

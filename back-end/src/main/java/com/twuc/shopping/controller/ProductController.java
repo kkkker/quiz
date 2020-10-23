@@ -26,9 +26,10 @@ public class ProductController {
 
     @PostMapping("/product")
     public ResponseEntity<String> addProduct(@Valid @RequestBody Product product) {
-        if (productService.addProduct(product).equals(StoreSystemMessageResponse.SUCCESS)) {
-            return ResponseEntity.ok().body(StoreSystemMessageResponse.SUCCESS);
+        String message = productService.addProduct(product);
+        if (StoreSystemMessageResponse.SUCCESS.equals(message)) {
+            return ResponseEntity.ok().body(message);
         }
-        return ResponseEntity.badRequest().body(StoreSystemMessageResponse.ERROR);
+        return ResponseEntity.badRequest().body(message);
     }
 }

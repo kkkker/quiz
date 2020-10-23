@@ -162,6 +162,30 @@ class ProductControllerTest {
     }
 
     @Test
+    void should_not_add_product_when_price_less_than_0() throws Exception {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+        assertEquals(0, productEntityList.size());
+        Product product = Product.builder()
+                .name("test")
+                .price(-1.0)
+                .units("units")
+                .imageUrl("test url")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(product);
+
+        mockMvc.perform(post("/product")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("negative price")));
+
+        assertEquals(0, productEntityList.size());
+    }
+
+    @Test
     void should_not_add_product_when_units_empty() throws Exception {
 
         List<ProductEntity> productEntityList = productRepository.findAll();

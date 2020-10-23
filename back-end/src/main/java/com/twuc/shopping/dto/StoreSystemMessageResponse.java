@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class StoreSystemMessageResponse {
     public static final String ERROR = "error";
     public static final String SUCCESS = "success";
+    public static final String NEGATIVE_PRICE = "negative price";
 }
