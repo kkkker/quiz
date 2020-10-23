@@ -79,4 +79,27 @@ class ProductServiceTest {
         assertEquals(StoreSystemMessageResponse.EXIST_NAME, result);
     }
 
+    @Test
+    void add_product_success() {
+        Product product = Product.builder()
+                .price(1.0)
+                .imageUrl("url")
+                .units("units")
+                .name("name")
+                .build();
+
+        ProductEntity productEntity = ProductEntity.builder()
+                .price(1.0)
+                .imageUrl("url")
+                .units("units")
+                .name("name")
+                .build();
+
+        when(productRepository.findByName(any(String.class))).thenReturn(Optional.empty());
+        String result = productService.addProduct(product);
+
+        assertEquals(StoreSystemMessageResponse.SUCCESS, result);
+        verify(productRepository, times(1)).save(productEntity);
+    }
+
 }
